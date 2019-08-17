@@ -10,13 +10,13 @@
     "build-css": "cpy src/patternlock.css dist && postcss src/patternlock.css > dist/patternlock.min.css"
   },
   "author": {
-    "name": "Sudhanshu Yadav",
-    "email": "sudhanshuyadav2@gmail.com"
+    "name": "Rob Koch",
+    "email": "kochrt@gmail.com"
   },
-  "version": "2.0.2",
+  "version": "2.0.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/s-yadav/patternLock"
+    "url": "https://github.com/kochrt/patternLock"
   },
   "ignore": [
     "patternLock.jquery.json"
