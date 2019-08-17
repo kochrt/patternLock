@@ -74,3 +74,26 @@ export function getLengthAngle(x1, x2, y1, y2) {
     angle: Math.round((Math.atan2(yDiff, xDiff) * 180) / Math.PI),
   };
 }
+
+export function canAddPoint(last, next) {
+  switch (last) {
+    case 1:
+      return [2, 4, 5].indexOf(next) !== -1
+    case 2:
+      return [1, 3, 4, 5, 6].indexOf(next) !== -1
+    case 3:
+      return [2, 5, 6].indexOf(next) !== -1
+    case 4:
+      return [1, 2, 5, 7, 8].indexOf(next) !== -1
+    case 5:
+      return [1, 2, 3, 4, 6, 7, 8, 9].indexOf(next) !== -1
+    case 6:
+      return [2, 3, 5, 8, 9].indexOf(next) !== -1
+    case 7:
+      return [4, 5, 8].indexOf(next) !== -1
+    case 8:
+      return [4, 5, 6, 7, 9].indexOf(next) !== -1
+    case 9:
+      return [5, 6, 8].indexOf(next) !== -1
+  }
+}

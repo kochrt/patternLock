@@ -8,6 +8,7 @@ import {
   createDom,
   toArray,
   assign,
+  canAddPoint
 } from './util';
 
 const privateMap = new WeakMap();
@@ -387,7 +388,7 @@ class PatternLock {
           const nextIdx = (jp - 1) * option.matrix[1] + ip;
           const nextPattId = iObj.mapperFunc(nextIdx) || nextIdx;
 
-          if (option.allowRepeat || patternAry.indexOf(nextPattId) === -1) {
+          if ((option.allowRepeat || patternAry.indexOf(nextPattId) === -1) && canAddPoint(lastPosObj.idx, nextPattId)) {
             // add direction to previous point and line
             iObj.addDirectionClass({ i: ip, j: jp });
 
@@ -400,16 +401,18 @@ class PatternLock {
         }
       }
 
-      // add direction to last point and line
-      if (iObj.lastPosObj) iObj.addDirectionClass(posObj);
+      if (canAddPoint(iObj.lastPosObj.idx, posObj.idx)) {
+        // add direction to last point and line
+        if (iObj.lastPosObj) iObj.addDirectionClass(posObj);
 
-      // mark the initial point added
-      iObj.markPoint(elm, pattId);
+        // mark the initial point added
+        iObj.markPoint(elm, pattId);
 
-      // add initial line
-      iObj.addLine(posObj);
+        // add initial line
+        iObj.addLine(posObj);
 
-      iObj.lastPosObj = posObj;
+        iObj.lastPosObj = posObj;
+      }
     }
   };
 

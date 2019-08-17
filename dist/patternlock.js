@@ -88,6 +88,29 @@
     };
   }
 
+  function canAddPoint(last, next) {
+    switch (last) {
+      case 1:
+        return [2, 4, 5].indexOf(next) !== -1;
+      case 2:
+        return [1, 3, 4, 5, 6].indexOf(next) !== -1;
+      case 3:
+        return [2, 5, 6].indexOf(next) !== -1;
+      case 4:
+        return [1, 2, 5, 7, 8].indexOf(next) !== -1;
+      case 5:
+        return [1, 2, 3, 4, 6, 7, 8, 9].indexOf(next) !== -1;
+      case 6:
+        return [2, 3, 5, 8, 9].indexOf(next) !== -1;
+      case 7:
+        return [4, 5, 8].indexOf(next) !== -1;
+      case 8:
+        return [4, 5, 6, 7, 9].indexOf(next) !== -1;
+      case 9:
+        return [5, 6, 8].indexOf(next) !== -1;
+    }
+  }
+
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -557,7 +580,7 @@
             var nextIdx = (jp - 1) * option.matrix[1] + ip;
             var nextPattId = iObj.mapperFunc(nextIdx) || nextIdx;
 
-            if (option.allowRepeat || patternAry.indexOf(nextPattId) === -1) {
+            if ((option.allowRepeat || patternAry.indexOf(nextPattId) === -1) && canAddPoint(lastPosObj.idx, nextPattId)) {
               // add direction to previous point and line
               iObj.addDirectionClass({ i: ip, j: jp });
 
@@ -570,16 +593,18 @@
           }
         }
 
-        // add direction to last point and line
-        if (iObj.lastPosObj) iObj.addDirectionClass(posObj);
+        if (canAddPoint(iObj.lastPosObj.idx, posObj.idx)) {
+          // add direction to last point and line
+          if (iObj.lastPosObj) iObj.addDirectionClass(posObj);
 
-        // mark the initial point added
-        iObj.markPoint(elm, pattId);
+          // mark the initial point added
+          iObj.markPoint(elm, pattId);
 
-        // add initial line
-        iObj.addLine(posObj);
+          // add initial line
+          iObj.addLine(posObj);
 
-        iObj.lastPosObj = posObj;
+          iObj.lastPosObj = posObj;
+        }
       }
     };
 
