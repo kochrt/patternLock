@@ -401,7 +401,7 @@ class PatternLock {
         }
       }
 
-      if (canAddPoint(iObj.lastPosObj.idx, posObj.idx)) {
+      // if (!iObj.lastPosObj || canAddPoint(iObj.lastPosObj.idx, posObj.idx)) {
         // add direction to last point and line
         if (iObj.lastPosObj) iObj.addDirectionClass(posObj);
 
@@ -413,7 +413,7 @@ class PatternLock {
 
         iObj.lastPosObj = posObj;
       }
-    }
+    // }
   };
 
   _onEnd = (e) => {
